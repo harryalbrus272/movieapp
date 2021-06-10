@@ -6,11 +6,17 @@ import App from './components/App';
 import movies from './reducers';
 import reportWebVitals from './reportWebVitals';
 const store = createStore(movies);
-console.log(store);
-console.log(store.getState());
+
+// //Dispatcher in place to dispatch the actions
+// store.dispatch({
+//   type: 'ADD_MOVIES',
+//   movies: []
+// });
+
+// console.log('After State', store.getState());
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App store={store} />
   </React.StrictMode>,
   document.getElementById('root')
 );
