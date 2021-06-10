@@ -1,22 +1,20 @@
-import {useEffect} from 'react';
-import { data } from '../data';
+import React, { useEffect, useState } from "react";
+import { data } from "../data";
 import Navbar from "./Navbar";
 import MovieCard from "./Moviecard";
+import { addMovies } from "../actions";
 function App({ store }) {
-  const movies = store.getState();
+  const { list } = store.getState();
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     //make an api call
     //dispatch an action
     store.subscribe(() => {
       //Subscribing to the state changes
-      console.log('Updated');
+      setLoaded(true);
     });
-    console.log('state', store.getState());
-    store.dispatch({
-      type: 'ADD_MOVIES',
-      movies: data
-    });    
+    store.dispatch(addMovies(data));
   }, []);
   return (
     <div className="App">
@@ -27,7 +25,7 @@ function App({ store }) {
           <div className="tab">Favourites</div>
         </div>
         <div className="list">
-          {movies.map((movie, index) => (
+          {loaded && list.map((movie, index) => (
             <MovieCard key={index} movie={movie} />
           ))}
         </div>
