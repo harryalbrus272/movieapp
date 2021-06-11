@@ -4,7 +4,8 @@ import Navbar from "./Navbar";
 import MovieCard from "./Moviecard";
 import { addMovies, setShowFavourite } from "../actions";
 function App({ store }) {
-  const { list, favourites, showFavourites } = store.getState();
+  const { movies } = store.getState(); /// movies: {}, search: {}
+  const { list, favourites, showFavourites } = movies;
   const [loaded, setLoaded] = useState(false);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   const displayMovies = showFavourites ? favourites : list;
@@ -14,12 +15,13 @@ function App({ store }) {
     store.subscribe(() => {
       //Subscribing to the state changes
       setLoaded(true);
+      console.log(store.getState());
       forceUpdate();
     });
     store.dispatch(addMovies(data));
   }, []);
   let isMovieFavourite = (movie) => {
-    const { favourites } = store.getState();
+    const { favourites } = movies;
     const index = favourites.indexOf(movie);
     //Found the movie
     if (index !== -1) return true;
