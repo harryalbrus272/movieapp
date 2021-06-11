@@ -7,15 +7,20 @@ import rootReducer from "./reducers";
 import reportWebVitals from "./reportWebVitals";
 //Curried form of function logger
 //logger(obj)(next)(action)
-const logger = function ({ dispatch, getState }) {
-  return function (next){
-    return function (action) {
-      //middleware code
-      console.log('ACTION_TYPE = ', action.type);
+// const logger = function ({ dispatch, getState }) {
+//   return function (next){
+//     return function (action) {
+//       //middleware code
+//       console.log('ACTION_TYPE = ', action.type);
+//       next(action);
+//     }
+//   }
+// };
+//Currying the above middleware
+const logger = ({dispatch, getState}) => (next) => (action) => {
+  console.log('ACTION_TYPE = ', action.type);
       next(action);
-    }
-  }
-};
+}
 const store = createStore(rootReducer, applyMiddleware(logger));
 
 // //Dispatcher in place to dispatch the actions
