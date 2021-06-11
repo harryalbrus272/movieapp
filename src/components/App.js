@@ -35,7 +35,7 @@ function App({ store }) {
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar dispatch={store.dispatch} />
       <div className="main">
         <div className="tabs">
           <div

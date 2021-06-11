@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { applyMiddleware, createStore } from "redux";
+import thunk from 'redux-thunk';
 import "./index.css";
 import App from "./components/App";
 import rootReducer from "./reducers";
@@ -17,11 +18,25 @@ import reportWebVitals from "./reportWebVitals";
 //   }
 // };
 //Currying the above middleware
-const logger = ({dispatch, getState}) => (next) => (action) => {
-  console.log('ACTION_TYPE = ', action.type);
-      next(action);
-}
-const store = createStore(rootReducer, applyMiddleware(logger));
+const logger =
+  ({ dispatch, getState }) =>
+  (next) =>
+  (action) => {
+    if(typeof action !== 'function') console.log("ACTION_TYPE = ", action.type);
+    next(action);
+  };
+// const thunk =
+//   ({ dispatch, getState }) =>
+//   (next) =>
+//   (action) => {
+//     if(typeof action === "function") {
+//       action(dispatch);
+//       return;
+//     }
+//     next(action);
+//   };
+//We have used redux-thunk library to work around the same funtion in our logic
+const store = createStore(rootReducer, applyMiddleware(logger, thunk));
 
 // //Dispatcher in place to dispatch the actions
 // store.dispatch({
