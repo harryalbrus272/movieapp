@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { data } from "../data";
 import { addMovieToList, handleMovieSearch } from "../actions";
 
 export default class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSearchResults: true,
       searchText: "",
     };
   }
@@ -26,6 +24,7 @@ export default class Navbar extends Component {
     });
   };
   render() {
+    const { result, showSearchResults } = this.props.search;
     return (
       <div className="nav">
         <div className="search-container">
@@ -33,6 +32,19 @@ export default class Navbar extends Component {
           <button onClick={this.handleSearch} id="search-btn">
             Search
           </button>
+          {showSearchResults && (
+            <div className="search-results">
+              <div className="search-result">
+                <img src={result.Poster} alt="search-pic" />
+                <div className="movie-info">
+                  <span>{result.Title}</span>
+                  <button onClick={() => this.handleAddtoMovies(result)}>
+                    Add to Movies
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );

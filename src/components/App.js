@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 import MovieCard from "./Moviecard";
 import { addMovies, setShowFavourite } from "../actions";
 function App({ store }) {
-  const { movies } = store.getState(); /// movies: {}, search: {}
+  const { movies, search } = store.getState(); /// movies: {}, search: {}
   const { list, favourites, showFavourites } = movies;
   const [loaded, setLoaded] = useState(false);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -35,7 +35,7 @@ function App({ store }) {
 
   return (
     <div className="App">
-      <Navbar dispatch={store.dispatch} />
+      <Navbar dispatch={store.dispatch} search={search} />
       <div className="main">
         <div className="tabs">
           <div
