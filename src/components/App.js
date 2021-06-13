@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useReducer } from "react";
 import { data } from "../data";
+import { connect } from 'react-redux';
 import Navbar from "./Navbar";
 import MovieCard from "./Moviecard";
 import { addMovies, setShowFavourite } from "../actions";
@@ -70,4 +71,13 @@ function App({ store }) {
   );
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    movies: state.movies,
+    search: state.search,
+  };
+}
+//These properties from store as props to the function
+const connectedAppComponent = connect(mapStateToProps)(App);
+
+export default connectedAppComponent;

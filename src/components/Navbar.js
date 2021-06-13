@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { addMovieToList, handleMovieSearch } from "../actions";
+import { connect } from 'react-redux';
 
-export default class Navbar extends Component {
+class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,3 +51,10 @@ export default class Navbar extends Component {
     );
   }
 }
+function mapStateToProps({ search }) {
+  return {
+    search,
+  };
+}
+
+export default connect(mapStateToProps)(Navbar);

@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
-import thunk from 'redux-thunk';
+import thunk from "redux-thunk";
 import "./index.css";
 import App from "./components/App";
 import rootReducer from "./reducers";
@@ -22,7 +23,8 @@ const logger =
   ({ dispatch, getState }) =>
   (next) =>
   (action) => {
-    if(typeof action !== 'function') console.log("ACTION_TYPE = ", action.type);
+    if (typeof action !== "function")
+      console.log("ACTION_TYPE = ", action.type);
     next(action);
   };
 // const thunk =
@@ -37,18 +39,58 @@ const logger =
 //   };
 //We have used redux-thunk library to work around the same funtion in our logic
 const store = createStore(rootReducer, applyMiddleware(logger, thunk));
-
+//export const StoreContext = createContext();
 // //Dispatcher in place to dispatch the actions
 // store.dispatch({
 //   type: 'ADD_MOVIES',
 //   movies: []
 // });
 
+// export function connect(callback) {
+//   return function (Component) {
+//     class ConnectedComponent extends React.Component {
+//       constructor(props) {
+//         super(props);
+//         this.unsubscribe = this.props.store.subscribe(() => {
+//           this.forceUpdate();
+//         });
+//       }
+
+//       componentWillUnmount() {
+//         this.unsubscribe();
+//       }
+//       render() {
+//         const { store } = this.props;
+//         const state = store.getState();
+//         const dataToBeSentAsProps = callback(state);
+
+//         return <Component dispatch={store.dispatch} {...dataToBeSentAsProps} />;
+//       }
+//     }
+
+//     //Wrapper component to the above class based component so that the constructor has the access to the store
+//     class ConnectedComponentWrapper extends React.Component {
+//       render() {
+//         return (
+//           <StoreContext.Consumer>
+//             {(store) => {
+//               return <ConnectedComponent store={store} />;
+//             }}
+//           </StoreContext.Consumer>
+//         );
+//       }
+//     }
+//     return ConnectedComponentWrapper;
+//   };
+// }
+
 console.log("After State", store.getState());
 ReactDOM.render(
-  <React.StrictMode>
-    <App store={store} />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App store={store} />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById("root")
 );
 
