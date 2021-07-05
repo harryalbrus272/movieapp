@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
-import React from 'react';
+import React, { createContext } from 'react';
 //Curried form of function logger
 //logger(obj)(next)(action)
 // const logger = function ({ dispatch, getState }) {

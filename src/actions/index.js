@@ -50,7 +50,7 @@ export function addMovieToList(movie) {
 }
 export function handleMovieSearch(searchText) {
   console.log("called handle Movie Search");
-  const url = `http://www.omdbapi.com/?apikey=3ca5df7&t=${searchText}`;
+  const url = `https://www.omdbapi.com/?apikey=3ca5df7&t=${searchText}`;
   return function (dispatch) {
     fetch(url)
       .then((res) => res.json())
